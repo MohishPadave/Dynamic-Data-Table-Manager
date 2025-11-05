@@ -12,10 +12,11 @@ A powerful data table manager built with Next.js, Redux Toolkit, and Material UI
 🔗 **[View Live Demo](https://dynamic-data-table-manager.vercel.app)** 
 
 ### Available Routes:
-- **`/`** - Main page with app information
-- **`/working`** - ✅ **Fully functional data table** (recommended)
+- **`/`** - ✅ **Main data table application** (fully functional!)
+- **`/working`** - Alternative working version (same functionality)
 - **`/minimal`** - Basic table without Redux
 - **`/debug`** - Environment debugging information
+- **`/maintenance`** - Old maintenance page (for reference)
 
 ## 📸 Screenshots
 
