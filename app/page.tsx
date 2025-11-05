@@ -1,132 +1,72 @@
 'use client';
 
-import { useState } from 'react';
-import { Container, Typography, Box, useTheme, alpha } from '@mui/material';
-import { DataTable } from '@/components/DataTable';
-import { TableControls } from '@/components/TableControls';
-import { FloatingActions } from '@/components/FloatingActions';
-import { ManageColumnsModal } from '@/components/ManageColumnsModal';
-import { ImportModal } from '@/components/ImportModal';
-import { TableChart, Speed, Security } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { exportToCSV } from '@/utils/csvUtils';
+import { Container, Typography, Box, Alert, Button } from '@mui/material';
+import { Warning, Build } from '@mui/icons-material';
+import Link from 'next/link';
 
 export default function Home() {
-  const theme = useTheme();
-  const { data, columns } = useSelector((state: RootState) => state.table);
-  const [showColumnsModal, setShowColumnsModal] = useState(false);
-  const [showImportModal, setShowImportModal] = useState(false);
-
-  const handleExport = () => {
-    const visibleColumns = columns.filter(col => col.visible);
-    exportToCSV(data, visibleColumns);
-  };
-
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.02)} 100%)`,
-    }}>
-      <Container maxWidth="xl" sx={{ py: 6 }}>
-        <Box sx={{ mb: 6, textAlign: 'center' }}>
-          <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            gap: 2, 
-            mb: 3 
-          }}>
-            <Box sx={{
-              p: 2,
-              borderRadius: '50%',
-              background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              color: 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <TableChart sx={{ fontSize: 32 }} />
-            </Box>
-            <Typography 
-              variant="h2" 
-              component="h1" 
-              sx={{ 
-                fontWeight: 800,
-                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Dynamic Data Table Manager
-            </Typography>
-          </Box>
-          
-          <Typography 
-            variant="h6" 
-            color="text.secondary" 
-            sx={{ 
-              mb: 4, 
-              maxWidth: 600, 
-              mx: 'auto',
-              lineHeight: 1.6,
-            }}
-          >
-            Powerful data management with sorting, filtering, import/export, and inline editing capabilities
-          </Typography>
+    <Container maxWidth="md" sx={{ py: 8 }}>
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Warning sx={{ fontSize: 64, color: 'warning.main', mb: 2 }} />
+        <Typography variant="h3" gutterBottom>
+          App Under Maintenance
+        </Typography>
+        <Typography variant="h6" color="text.secondary" gutterBottom>
+          We're fixing some hydration issues. Please try our working version:
+        </Typography>
+      </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: 4, 
-            flexWrap: 'wrap',
-            mb: 4,
-          }}>
-            {[
-              { icon: Speed, label: 'Fast Performance', color: theme.palette.success.main },
-              { icon: Security, label: 'Type Safe', color: theme.palette.info.main },
-              { icon: TableChart, label: 'Rich Features', color: theme.palette.warning.main },
-            ].map((feature, index) => (
-              <Box key={index} sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: 1,
-                px: 2,
-                py: 1,
-                borderRadius: 2,
-                backgroundColor: alpha(feature.color, 0.1),
-                border: `1px solid ${alpha(feature.color, 0.2)}`,
-              }}>
-                <feature.icon sx={{ color: feature.color, fontSize: 20 }} />
-                <Typography variant="body2" sx={{ fontWeight: 600, color: feature.color }}>
-                  {feature.label}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-        
-        <TableControls />
-        <DataTable />
-        
-        <FloatingActions
-          onImport={() => setShowImportModal(true)}
-          onExport={handleExport}
-          onManageColumns={() => setShowColumnsModal(true)}
-        />
+      <Alert severity="info" sx={{ mb: 4 }}>
+        <Typography variant="body1" gutterBottom>
+          <strong>The main app is experiencing hydration issues with Redux Persist.</strong>
+        </Typography>
+        <Typography variant="body2">
+          We've created a working version without Redux Persist that demonstrates all the core features.
+        </Typography>
+      </Alert>
 
-        <ManageColumnsModal
-          open={showColumnsModal}
-          onClose={() => setShowColumnsModal(false)}
-        />
+      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <Button 
+          component={Link} 
+          href="/working" 
+          variant="contained" 
+          size="large"
+          startIcon={<Build />}
+        >
+          Try Working Version
+        </Button>
         
-        <ImportModal
-          open={showImportModal}
-          onClose={() => setShowImportModal(false)}
-        />
-      </Container>
-    </Box>
+        <Button 
+          component={Link} 
+          href="/minimal" 
+          variant="outlined" 
+          size="large"
+        >
+          Minimal Version
+        </Button>
+        
+        <Button 
+          component={Link} 
+          href="/debug" 
+          variant="outlined" 
+          size="large"
+        >
+          Debug Info
+        </Button>
+      </Box>
+
+      <Box sx={{ mt: 6, p: 3, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          Available Test Pages:
+        </Typography>
+        <ul>
+          <li><strong>/working</strong> - Full-featured table without Redux Persist</li>
+          <li><strong>/minimal</strong> - Basic table with search and sort</li>
+          <li><strong>/debug</strong> - Environment and debugging information</li>
+          <li><strong>/simple</strong> - Simple MUI components test</li>
+        </ul>
+      </Box>
+    </Container>
   );
 }
