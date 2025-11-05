@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Dynamic Data Table Manager',
   description: 'A powerful data table manager with import/export, sorting, and inline editing',
+  keywords: 'data table, csv import, export, sorting, filtering, react, nextjs',
+  authors: [{ name: 'Mohish Padave' }],
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({
@@ -17,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <ErrorBoundary>
+          <Providers>{children}</Providers>
+        </ErrorBoundary>
       </body>
     </html>
   );
