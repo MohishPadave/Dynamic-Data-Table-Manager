@@ -9,7 +9,13 @@ A powerful data table manager built with Next.js, Redux Toolkit, and Material UI
 
 ## 🚀 Live Demo
 
-[View Live Demo](https://dynamic-data-table-manager.vercel.app) (Deploy to see it in action!)
+🔗 **[View Live Demo](https://dynamic-data-table-manager.vercel.app)** 
+
+### Available Routes:
+- **`/`** - Main page with app information
+- **`/working`** - ✅ **Fully functional data table** (recommended)
+- **`/minimal`** - Basic table without Redux
+- **`/debug`** - Environment debugging information
 
 ## 📸 Screenshots
 
@@ -136,10 +142,18 @@ Additional columns will be added dynamically.
 
 ### Deploy to Vercel (Recommended)
 
-1. Push your code to GitHub (already done!)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MohishPadave/Dynamic-Data-Table-Manager)
+
+**Manual Deployment:**
+1. Push your code to GitHub ✅ (Done!)
 2. Visit [vercel.com](https://vercel.com)
-3. Import your GitHub repository
-4. Deploy with default settings
+3. Sign in with GitHub
+4. Click "New Project"
+5. Import `MohishPadave/Dynamic-Data-Table-Manager`
+6. Deploy with default settings
+7. Your app will be live at `https://dynamic-data-table-manager.vercel.app`
+
+**Environment Variables:** None required - the app works out of the box!
 
 ### Deploy to Netlify
 
@@ -148,11 +162,11 @@ Additional columns will be added dynamically.
 npm run build
 ```
 
-2. Deploy the `out` folder to Netlify
+2. Deploy the `.next` folder to Netlify
 
 ### Deploy to Other Platforms
 
-The app is a standard Next.js application and can be deployed to any platform that supports Node.js.
+The app is a standard Next.js 14 application and can be deployed to any platform that supports Node.js 18+.
 
 ## 🤝 Contributing
 
