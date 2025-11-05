@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { store, persistor } from '@/store';
 import { RootState } from '@/store';
 import { Box, CircularProgress } from '@mui/material';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 // Create base themes outside of component to avoid recreation
 const createAppTheme = (mode: 'light' | 'dark') => createTheme({
@@ -124,6 +124,17 @@ function LoadingScreen() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Show loading screen during SSR
+  if (!isClient) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Provider store={store}>
       <PersistGate loading={<LoadingScreen />} persistor={persistor}>

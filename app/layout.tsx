@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: 'A powerful data table manager with import/export, sorting, and inline editing',
   keywords: 'data table, csv import, export, sorting, filtering, react, nextjs',
   authors: [{ name: 'Mohish Padave' }],
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
