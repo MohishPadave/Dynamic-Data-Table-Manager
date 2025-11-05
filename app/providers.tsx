@@ -8,104 +8,93 @@ import { useSelector } from 'react-redux';
 import { store, persistor } from '@/store';
 import { RootState } from '@/store';
 import { Box, CircularProgress } from '@mui/material';
+import { useMemo } from 'react';
+
+// Create base themes outside of component to avoid recreation
+const createAppTheme = (mode: 'light' | 'dark') => createTheme({
+  palette: {
+    mode,
+    primary: {
+      main: mode === 'dark' ? '#90caf9' : '#1976d2',
+    },
+    secondary: {
+      main: mode === 'dark' ? '#f48fb1' : '#dc004e',
+    },
+    background: {
+      default: mode === 'dark' ? '#0a0a0a' : '#fafafa',
+      paper: mode === 'dark' ? '#1e1e1e' : '#ffffff',
+    },
+  },
+  typography: {
+    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h3: {
+      fontWeight: 700,
+      letterSpacing: '-0.02em',
+    },
+    h6: {
+      fontWeight: 600,
+    },
+  },
+  shape: {
+    borderRadius: 12,
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontWeight: 600,
+          borderRadius: 8,
+          padding: '8px 16px',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+          transition: 'box-shadow 0.3s ease-in-out',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'scale(1.1)',
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 8,
+            transition: 'all 0.2s ease-in-out',
+          },
+        },
+      },
+    },
+  },
+});
 
 function ThemeWrapper({ children }: { children: React.ReactNode }) {
   const themeMode = useSelector((state: RootState) => state.table.theme);
   
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: themeMode === 'dark' ? '#90caf9' : '#1976d2',
-      },
-      secondary: {
-        main: themeMode === 'dark' ? '#f48fb1' : '#dc004e',
-      },
-      background: {
-        default: themeMode === 'dark' ? '#0a0a0a' : '#fafafa',
-        paper: themeMode === 'dark' ? '#1e1e1e' : '#ffffff',
-      },
-    },
-    typography: {
-      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-      h3: {
-        fontWeight: 700,
-        letterSpacing: '-0.02em',
-      },
-      h6: {
-        fontWeight: 600,
-      },
-    },
-    shape: {
-      borderRadius: 12,
-    },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            textTransform: 'none',
-            fontWeight: 600,
-            borderRadius: 8,
-            padding: '8px 16px',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'translateY(-1px)',
-              boxShadow: themeMode === 'dark' 
-                ? '0 4px 12px rgba(144, 202, 249, 0.3)' 
-                : '0 4px 12px rgba(25, 118, 210, 0.3)',
-            },
-          },
-        },
-      },
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundImage: 'none',
-            boxShadow: themeMode === 'dark'
-              ? '0 4px 20px rgba(0, 0, 0, 0.5)'
-              : '0 4px 20px rgba(0, 0, 0, 0.1)',
-            transition: 'box-shadow 0.3s ease-in-out',
-          },
-        },
-      },
-      MuiTableCell: {
-        styleOverrides: {
-          root: {
-            borderBottom: `1px solid ${themeMode === 'dark' ? '#333' : '#e0e0e0'}`,
-          },
-          head: {
-            fontWeight: 600,
-            backgroundColor: themeMode === 'dark' ? '#2a2a2a' : '#f5f5f5',
-          },
-        },
-      },
-      MuiIconButton: {
-        styleOverrides: {
-          root: {
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.1)',
-            },
-          },
-        },
-      },
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 8,
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: themeMode === 'dark' ? '#90caf9' : '#1976d2',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
+  const theme = useMemo(() => createAppTheme(themeMode), [themeMode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -124,9 +113,10 @@ function LoadingScreen() {
       minHeight="100vh"
       flexDirection="column"
       gap={2}
+      sx={{ backgroundColor: '#fafafa' }}
     >
       <CircularProgress size={40} />
-      <Box sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+      <Box sx={{ color: '#666', fontSize: '0.875rem' }}>
         Loading your data...
       </Box>
     </Box>

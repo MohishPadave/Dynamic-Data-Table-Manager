@@ -23,7 +23,7 @@ export interface TableState {
   sortOrder: 'asc' | 'desc';
   currentPage: number;
   rowsPerPage: number;
-  editingRows: Set<string>;
+  editingRows: string[];
   theme: 'light' | 'dark';
 }
 

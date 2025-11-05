@@ -24,7 +24,7 @@ const initialState: TableState = {
   sortOrder: 'asc',
   currentPage: 0,
   rowsPerPage: 10,
-  editingRows: new Set(),
+  editingRows: [],
   theme: 'light',
 };
 
@@ -71,16 +71,15 @@ const tableSlice = createSlice({
       state.columns = action.payload;
     },
     toggleEditingRow: (state, action: PayloadAction<string>) => {
-      const newSet = new Set(state.editingRows);
-      if (newSet.has(action.payload)) {
-        newSet.delete(action.payload);
+      const index = state.editingRows.indexOf(action.payload);
+      if (index > -1) {
+        state.editingRows.splice(index, 1);
       } else {
-        newSet.add(action.payload);
+        state.editingRows.push(action.payload);
       }
-      state.editingRows = newSet;
     },
     clearEditingRows: (state) => {
-      state.editingRows = new Set();
+      state.editingRows = [];
     },
     toggleTheme: (state) => {
       state.theme = state.theme === 'light' ? 'dark' : 'light';

@@ -105,7 +105,7 @@ export function DataTable() {
 
   const handleEditToggle = (rowId: string) => {
     const row = data.find(r => r.id === rowId);
-    if (row && !editingRows.has(rowId)) {
+    if (row && !editingRows.includes(rowId)) {
       setEditValues(prev => ({ ...prev, [rowId]: { ...row } }));
     }
     dispatch(toggleEditingRow(rowId));
@@ -172,7 +172,7 @@ export function DataTable() {
         overflow: 'hidden',
       }}
     >
-      {editingRows.size > 0 && (
+      {editingRows.length > 0 && (
         <Fade in={true}>
           <Box sx={{ 
             p: 2, 
@@ -182,7 +182,7 @@ export function DataTable() {
           }}>
             <Stack direction="row" spacing={2} alignItems="center">
               <Typography variant="body2" color="text.secondary">
-                {editingRows.size} row{editingRows.size > 1 ? 's' : ''} being edited
+                {editingRows.length} row{editingRows.length > 1 ? 's' : ''} being edited
               </Typography>
               <Button 
                 variant="contained" 
@@ -232,7 +232,7 @@ export function DataTable() {
           </TableHead>
           <TableBody>
             {paginatedData.map((row) => {
-              const isEditing = editingRows.has(row.id);
+              const isEditing = editingRows.includes(row.id);
               const currentValues = editValues[row.id] || row;
               
               return (
